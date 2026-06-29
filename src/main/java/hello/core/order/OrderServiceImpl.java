@@ -1,9 +1,11 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,9 +13,13 @@ import org.springframework.stereotype.Component;
 public class OrderServiceImpl implements OrderService{
 
     private final MemberRepository memberRepository;
-    private DiscountPolicy discountPolicy;
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    private final DiscountPolicy discountPolicy;
+
+
+//    Lombok @RequiredArgsConstructor를 사용하면 final이 붙은 필드만 가지고 생성자를 만들어준다.
+//    따라서 생성자를 쓸 필요가 없어진다.
+    @Autowired //생성자 1개일 경우 생략 가능
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
